@@ -1,10 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import {HashRouter as Router} from 'react-router-dom';
+import ReactRouter from './Routers/Router';
+import {CookiesProvider} from "react-cookie";
+import './index.css'
 
 ReactDOM.render(
-  <React.StrictMode>
-
-  </React.StrictMode>,
-  document.getElementById('root')
+    <CookiesProvider>
+      <Router>
+        <ReactRouter/>
+      </Router>
+    </CookiesProvider>,
+    document.getElementById('root')
 );

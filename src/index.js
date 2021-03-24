@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {HashRouter as Router} from 'react-router-dom';
+import {BrowserRouter as Router} from 'react-router-dom';
 import ReactRouter from './Routers/Router';
 import {CookiesProvider} from "react-cookie";
 import './index.css'

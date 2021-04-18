@@ -4,3 +4,6 @@
 
 deployed on Netlify:
 https://coursera-capstone-keren.netlify.app/#/
+
+
+(dbdump is at: https://coursera-capstone-keren.netlify.app/#/dbdump)

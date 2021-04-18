@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import '../index.css'
 import {useCookies} from "react-cookie";
-import {Button, TextField} from "@material-ui/core";
+import {Button, TextField, Typography} from "@material-ui/core";
 import {useHistory} from "react-router-dom";
 
 const NewPassword = (props) => {
@@ -9,30 +9,46 @@ const NewPassword = (props) => {
     const [cookies] = useCookies(['user']);
     const [password1, setPassword1] = useState('');
     const [password2, setPassword2] = useState('');
+    const [inputError, setInputError] = useState('');
+
+
+    const checkPassword = () => {
+
+    }
 
     const changePass = () => {
-        const body = {
-            username: cookies.user.username,
-            password: password2
+        if (password1 !== password2) {
+            setInputError("Passwords don't match")
+            return
         }
+        if (checkPassword()) {
+            const body = {
+                username: cookies.user.username,
+                password: password2
+            }
 
-        fetch(`http://localhost:3000/api/users/${cookies.user._id}`, {
-            method: 'PUT',
-            credentials: 'include',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(body),
-        })
-            .then(response => history.push('/dashboard'))
+            fetch(`http://localhost:3000/api/users/${cookies.user._id}`, {
+                method: 'PUT',
+                credentials: 'include',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(body),
+            })
+                .then(() => history.push('/dashboard'))
+        } else {
+            setInputError("Password doesn't match requirements")
+            return
+        }
     }
 
     return (
         <div className={'form-page'} style={{height: '350px'}}>
             <TextField label="Password"
-                       helperText="Needs to be 7 to 20 characters (letters only) and contain at least two words (at least one space)."
+                       helperText="Needs to be 7 to 20 characters and contain at least two words (at least one space)."
                        variant="outlined" type="password" fullWidth
                        value={password1} onChange={(e) => setPassword1(e.target.value)}/>
             <TextField label="Password Verification" variant="outlined" type="password" fullWidth
                        value={password2} onChange={(e) => setPassword2(e.target.value)}/>
+            <Typography>{inputError}</Typography>
             <Button variant="contained" color="primary" disableElevation onClick={changePass}>
                 Change Password
             </Button>

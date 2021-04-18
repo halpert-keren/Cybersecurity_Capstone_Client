@@ -1,20 +1,22 @@
 import React, {useState} from 'react';
 import '../index.css'
 import {useCookies} from "react-cookie";
-import {Button, TextField} from "@material-ui/core";
+import {Button, TextField, Typography} from "@material-ui/core";
 import {useHistory} from "react-router-dom";
 
 const Login = (props) => {
     let history = useHistory();
     const [cookies, setCookie] = useCookies(['user']);
-    const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [inputError, setInputError] = useState('');
 
     const login = () => {
         const body = {
-            username: email,
+            username: username,
             password: password
         }
+        console.log(body)
 
         fetch(`http://localhost:3000/auth/login`, {
             method: 'POST',
@@ -24,22 +26,29 @@ const Login = (props) => {
         })
             .then(response => response.json())
             .then(result => {
-                const cookiePromise = new Promise((resolve) => {
-                    setCookie('user', result)
-                    resolve()
-                })
-                cookiePromise.then(() => {
-                    history.push('/dashboard')
-                })
+                console.log(result)
+                if (result['fail']) {
+                    setInputError('Password is incorrect')
+                    return
+                } else {
+                    const cookiePromise = new Promise((resolve) => {
+                        setCookie('user', result)
+                        resolve()
+                    })
+                    cookiePromise.then(() => {
+                        history.push('/dashboard')
+                    })
+                }
             })
     }
 
     return (
         <div className={'form-page'} style={{height: '350px'}}>
             <TextField label="Email or Username" variant="outlined" fullWidth
-                       value={email} onChange={(e) => setEmail(e.target.value)}/>
+                       value={username} onChange={(e) => setUsername(e.target.value)}/>
             <TextField label="Password" variant="outlined" type="password" fullWidth
                        value={password} onChange={(e) => setPassword(e.target.value)}/>
+            <Typography>{inputError}</Typography>
             <Button variant="contained" color="primary" disableElevation onClick={login}>
                 Login
             </Button>

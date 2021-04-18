@@ -17,8 +17,7 @@ const ForgotPassword = (props) => {
             email: email
         }
         setPassCodeInput(true)
-        console.log(body)
-        fetch(`http://localhost:3000/auth/get-passcode`, {
+        fetch(`https://capstone-coursera-project.herokuapp.com/auth/get-passcode`, {
             method: 'POST',
             credentials: 'include',
             headers: {'Content-Type': 'application/json'},
@@ -33,7 +32,7 @@ const ForgotPassword = (props) => {
             passCode: passCode
         }
 
-        fetch(`http://localhost:3000/auth/login-passcode`, {
+        fetch(`https://capstone-coursera-project.herokuapp.com/auth/login-passcode`, {
             method: 'POST',
             credentials: 'include',
             headers: {'Content-Type': 'application/json'},
@@ -44,7 +43,6 @@ const ForgotPassword = (props) => {
                 if(result['fail']) {
                     setInputError('The pass code is incorrect')
                 } else {
-                    console.log(result)
                     const cookiePromise = new Promise((resolve) => {
                         setCookie('user', result)
                         resolve()

@@ -16,9 +16,8 @@ const Login = (props) => {
             username: username,
             password: password
         }
-        console.log(body)
 
-        fetch(`http://localhost:3000/auth/login`, {
+        fetch(`https://capstone-coursera-project.herokuapp.com/auth/login`, {
             method: 'POST',
             credentials: 'include',
             headers: {'Content-Type': 'application/json'},
@@ -26,7 +25,6 @@ const Login = (props) => {
         })
             .then(response => response.json())
             .then(result => {
-                console.log(result)
                 if (result['fail']) {
                     setInputError('Password is incorrect')
                     return

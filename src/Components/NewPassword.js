@@ -11,9 +11,28 @@ const NewPassword = (props) => {
     const [password2, setPassword2] = useState('');
     const [inputError, setInputError] = useState('');
 
-
     const checkPassword = () => {
-
+        if (password1 !== password2) {
+            setInputError("Passwords don't match")
+            return false
+        }
+        if(password2.trim() !== password2) {
+            setInputError("Password can't have spaces at the start or end")
+            return false
+        }
+        if(password2.length < 7) {
+            setInputError("Password is too short")
+            return false
+        }
+        if(password2.length > 20) {
+            setInputError("Password is too long")
+            return false
+        }
+        if(password2.split(" ").length < 2) {
+            setInputError("Password doesn't match requirements")
+            return false
+        }
+        return true
     }
 
     const changePass = () => {
@@ -27,7 +46,7 @@ const NewPassword = (props) => {
                 password: password2
             }
 
-            fetch(`http://localhost:3000/api/users/${cookies.user._id}`, {
+            fetch(`https://capstone-coursera-project.herokuapp.com/api/users/${cookies.user._id}`, {
                 method: 'PUT',
                 credentials: 'include',
                 headers: {'Content-Type': 'application/json'},

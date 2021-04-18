@@ -10,7 +10,7 @@ const DBdump = (props) => {
     const [DBList, setDBList] = useState([]);
 
     useEffect(() => {
-        fetch(`http://localhost:3000/dbdump`, {
+        fetch(`https://capstone-coursera-project.herokuapp.com/dbdump`, {
             credentials: 'include',
             headers: {'Content-Type': 'application/json'}
         })
@@ -24,7 +24,6 @@ const DBdump = (props) => {
         <>
             <div className={'db-area'}>
                 {DBList.map((item, index) => {
-                    console.log(item)
                     return (
                         <div key={index} className={'db-card'}>
                             <Card>

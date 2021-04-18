@@ -29,11 +29,11 @@ const Signup = (props) => {
             setInputError("Password is too long")
             return false
         }
-        if(password2.split(" ").length - 1 < 1) {
+        if(password2.split(" ").length < 2) {
             setInputError("Password doesn't match requirements")
             return false
         }
-
+        return true
     }
 
     const signup = () => {
@@ -45,7 +45,7 @@ const Signup = (props) => {
                 password: password2
             }
 
-            fetch(`http://localhost:3000/auth/signup`, {
+            fetch(`https://capstone-coursera-project.herokuapp.com/auth/signup`, {
                 method: 'POST',
                 credentials: 'include',
                 headers: {'Content-Type': 'application/json'},

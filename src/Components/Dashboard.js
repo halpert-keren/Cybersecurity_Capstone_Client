@@ -13,7 +13,7 @@ const Dashboard = (props) => {
     const [message, setMessage] = useState('');
 
     useEffect(() => {
-        fetch(`http://localhost:3000/api/messages?username=${cookies.user.username}`, {
+        fetch(`https://capstone-coursera-project.herokuapp.com/api/messages?username=${cookies.user.username}`, {
             credentials: 'include',
             headers: {'Content-Type': 'application/json'}
         })
@@ -29,14 +29,13 @@ const Dashboard = (props) => {
     }
 
     const sendMessage = () => {
-        console.log("sendMessage")
         const body = {
             sender: cookies.user.username,
             receiver: receiver,
             textMessage: message,
         }
         console.log(body)
-        fetch(`http://localhost:3000/api/messages`, {
+        fetch(`https://capstone-coursera-project.herokuapp.com/api/messages`, {
             method: 'POST',
             credentials: 'include',
             headers: {'Content-Type': 'application/json'},
@@ -44,7 +43,6 @@ const Dashboard = (props) => {
         })
             .then(response => response.json())
             .then(result => {
-                console.log(result)
                 setMessage('')
                 setReceiver('')
                 setUpdater(!updater)
